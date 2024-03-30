@@ -30,7 +30,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final TokenService tokenService;
-    private final UserDetailsService userService;
     private final MainService mainService;
 
     @Override
@@ -44,7 +43,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             String token = tokenService.getTokenFrom(authorizationHeader);
             UserResponse userResponse = mainService.getUsers(token);
             UserDetails user = (UserDetails) userResponse;
-            var authenticationToken = new UsernamePasswordAuthenticationToken(userResponse.getEmail(), null, user.getAuthorities());
+            var authenticationToken = new UsernamePasswordAuthenticationToken(userResponse.getId(), null, user.getAuthorities());
             authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             filterChain.doFilter(request, response);

@@ -4,9 +4,10 @@
  */
 package com.school.course.controller;
 
+import com.school.course.service.CourseService;
+import jakarta.annotation.security.RolesAllowed;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,12 +17,15 @@ import org.springframework.web.bind.annotation.RestController;
  * @author panha
  */
 @RestController
-@RequestMapping("/courses")
+@RequestMapping("/student/courses")
 @RequiredArgsConstructor
-public class CourseController {
+public class CourseStudentController {
 
-    @GetMapping("/")
-    public ResponseEntity<String> getUsers(Authentication authentication) {
-        return ResponseEntity.status(200).body((String) authentication.getPrincipal());
+    private final CourseService courseService;
+
+    @GetMapping()
+    @RolesAllowed("STUDENT")
+    public ResponseEntity<String> getStudentCourse() {
+        return ResponseEntity.status(200).body(courseService.getCourses());
     }
 }

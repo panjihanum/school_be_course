@@ -12,8 +12,6 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class TokenService {
 
-    private final MainService mainService;
-
     public String getTokenFrom(String bearerToken) {
         final String bearer = "Bearer ";
         if (bearerToken == null || !bearerToken.startsWith(bearer)) {
@@ -21,10 +19,5 @@ public class TokenService {
         }
         String token = bearerToken.substring(bearer.length());
         return token;
-    }
-
-    public String getSubjectFrom(String token) {
-        mainService.getUsers(token);
-        return "";
     }
 }

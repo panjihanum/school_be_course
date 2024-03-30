@@ -23,7 +23,7 @@ public class UserResponse implements UserDetails {
     private UUID id;
     private String firstName;
     private String lastName;
-    private Date birthDate;
+    private Date birthdate;
     private String email;
     private String role;
 
