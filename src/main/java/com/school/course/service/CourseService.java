@@ -7,11 +7,10 @@ package com.school.course.service;
 import com.school.course.dao.CourseRepository;
 import com.school.course.dto.CourseRequest;
 import com.school.course.model.Course;
-import java.util.UUID;
+import jakarta.transaction.Transactional;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 /**
@@ -19,11 +18,15 @@ import org.springframework.stereotype.Service;
  * @author panha
  */
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class CourseService {
 
     @Autowired
     private CourseRepository courseRepository;
+
+    @Autowired
+    private AuthService authService;
 
     public Course addCourse(CourseRequest courseRequest) {
         Course course = new Course();
@@ -38,18 +41,15 @@ public class CourseService {
         return course;
     }
 
-    public String getCourses() {
-        return this.getUserId().toString();
+    public List<Course> getAllCourse() {
+        return courseRepository.findAll();
     }
 
-    public UUID getUserId() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    public List<Course> getStudentCourses() {
+        return courseRepository.findByEnrollmentsIdUserIdAndIsActiveTrue(authService.getUserId());
+    }
 
-        if (authentication != null && authentication.isAuthenticated()) {
-            UUID userId = (UUID) authentication.getPrincipal();
-            return userId;
-        } else {
-            return null;
-        }
+    public List<Course> getTeacherCourse() {
+        return courseRepository.findByTeacherId(authService.getUserId());
     }
 }

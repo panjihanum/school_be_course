@@ -4,6 +4,7 @@
  */
 package com.school.course.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -39,6 +40,7 @@ public class Course {
     @Column(name = "expiry_date")
     private Date expiryDate;
 
-    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonIgnore
     private List<CourseEnrollment> enrollments;
 }

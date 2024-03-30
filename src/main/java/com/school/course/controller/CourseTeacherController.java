@@ -20,15 +20,15 @@ import org.springframework.web.bind.annotation.RestController;
  * @author panha
  */
 @RestController
-@RequestMapping("/student/courses")
+@RequestMapping("/teacher/courses")
 @RequiredArgsConstructor
-public class CourseStudentController {
+public class CourseTeacherController {
 
     private final CourseService courseService;
 
     @GetMapping()
-    @RolesAllowed("STUDENT")
-    public ResponseEntity<List<Course>> getStudentCourses() {
-        return ResponseEntity.status(HttpStatus.OK).body(courseService.getStudentCourses());
+    @RolesAllowed("TEACHER")
+    public ResponseEntity<List<Course>> getTeacherCourses() {
+        return ResponseEntity.status(HttpStatus.OK).body(courseService.getTeacherCourse());
     }
 }

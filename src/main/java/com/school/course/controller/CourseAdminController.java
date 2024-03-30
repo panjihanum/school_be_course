@@ -12,9 +12,11 @@ import com.school.course.service.EnrollmentService;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.validation.Valid;
 import java.util.HashSet;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,5 +46,11 @@ public class CourseAdminController {
     public ResponseEntity<String> enrollments(@RequestBody @Valid EnrollmentRequest request) {
         enrollmentService.enrollStudents(request.getCourseId(), new HashSet<>(request.getStudentIds()));
         return ResponseEntity.status(HttpStatus.OK).body("Success");
+    }
+
+    @GetMapping()
+    @RolesAllowed("ADMIN")
+    public ResponseEntity<List<Course>> getAllCourses() {
+        return ResponseEntity.status(HttpStatus.OK).body(courseService.getAllCourse());
     }
 }

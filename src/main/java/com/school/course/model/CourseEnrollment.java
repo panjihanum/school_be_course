@@ -4,6 +4,7 @@
  */
 package com.school.course.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,8 +22,9 @@ public class CourseEnrollment {
 
     @ManyToOne
     @JoinColumn(name = "course_id", insertable = false, updatable = false)
+    @JsonIgnore
     private Course course;
 
     @Column(name = "is_active", nullable = false)
-    private boolean active;
+    private boolean isActive;
 }
