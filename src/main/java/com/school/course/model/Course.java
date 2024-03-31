@@ -44,6 +44,5 @@ public class Course {
     private Boolean isActive = true;
 
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JsonIgnore
     private List<CourseEnrollment> enrollments;
 }
