@@ -6,9 +6,12 @@ package com.school.course.service;
 
 import com.school.course.dao.CourseRepository;
 import com.school.course.dto.CourseRequest;
+import com.school.course.exception.ResourceNotFoundException;
 import com.school.course.model.Course;
 import jakarta.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,6 +42,22 @@ public class CourseService {
         courseRepository.save(course);
 
         return course;
+    }
+
+    public Course updateCourse(UUID courseId, CourseRequest courseRequest) {
+        Optional<Course> optionalCourse = courseRepository.findById(courseId);
+        if (!optionalCourse.isPresent()) {
+            throw new ResourceNotFoundException("Course not found with id ", courseId);
+        }
+
+        Course course = optionalCourse.get();
+        course.setTeacherId(courseRequest.getTeacherId());
+        course.setTitle(courseRequest.getTitle());
+        course.setDescription(courseRequest.getDescription());
+        course.setEffectiveDate(courseRequest.getEffectiveDate());
+        course.setExpiryDate(courseRequest.getExpiryDate());
+
+        return courseRepository.save(course);
     }
 
     public List<Course> getAllCourse() {

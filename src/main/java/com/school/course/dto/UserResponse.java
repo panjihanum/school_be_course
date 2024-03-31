@@ -26,6 +26,8 @@ public class UserResponse implements UserDetails {
     private Date birthdate;
     private String email;
     private String role;
+    private String username;
+    private String isActive;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -34,11 +36,6 @@ public class UserResponse implements UserDetails {
 
     @Override
     public String getPassword() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public String getUsername() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 

@@ -40,6 +40,9 @@ public class Course {
     @Column(name = "expiry_date")
     private Date expiryDate;
 
+    @Column(name = "is_active")
+    private Boolean isActive = true;
+
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonIgnore
     private List<CourseEnrollment> enrollments;
